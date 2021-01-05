@@ -1,42 +1,31 @@
 <template>
   <div  class="corpo">
-    <h1 class="centralizado"> {{titulo}} </h1>
 
-    <ul class="listaFotos">
-      <li class="listaFotosItem" v-for="foto of fotos">
+    <meu-menu :rotas="routes" />
 
-        <meuPainel :titulo="foto.titulo">
-           <img class="imagemResponsiva" :src="foto.url" :alt="foto.titulo">
-        </meuPainel>
-
-      </li>
-    </ul>
-
+    <transition name="pagina">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
 <script>
-import Painel from './components/shared/painel/Painel.vue'
+import { routes } from './routes'
+import Menu from './components/shared/menu/menu.vue'
 
 export default {
 
   components: {
-    'meuPainel': Painel
+    'meu-menu': Menu
   },
 
   data(){
-    return {
-      titulo:"App Pictures",
-      fotos: []
-    }
-  },
 
-  created(){
-    let promise = this.$http.get('http://localhost:3000/v1/fotos')
-    promise
-      .then(res => res.json())
-      .then(fotos => this.fotos = fotos, err => console.log(err))
+    return {
+      routes
+    }
   }
+  
 }
 </script>
 
@@ -47,22 +36,14 @@ export default {
     margin: 0 auto;
   }
 
-  .centralizado{
-    text-align: center;
+  .pagina-enter,
+  .pagina-leave-active {
+    opacity: 0;
   }
 
-  .listaFotos{
-    list-style: none;
+  .pagina-enter-active,
+  .pagina-leave-active {
+    transition: opacity .4s;
   }
 
-  .listaFotos .listaFotosItem{
-    display: inline-block;
-  }
-
-  .imagemResponsiva{
-    width: 100%;
-  }
-  
-
-   
 </style>
