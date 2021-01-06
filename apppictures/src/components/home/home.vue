@@ -9,6 +9,12 @@
 
         <meuPainel :titulo="foto.titulo">
           <imagem-responsiva :url="foto.url" :titulo="foto.titulo" />
+          <meu-botao 
+            tipo="button" 
+            rotulo="Remover" 
+            @botaoAtivado="remove(foto)"
+            :confirmacao="true"
+            estilo="perigo" />
         </meuPainel>
 
       </li>
@@ -20,14 +26,14 @@
 <script>
 import Painel from '../shared/painel/Painel.vue'
 import ImagemResponsiva from '../shared/imagem-responsiva/imagemResponsiva.vue'
-
+import Botao from '../shared/botao/botao.vue'
 
 export default {
 
   components: {
     'meuPainel': Painel,
     'ImagemResponsiva': ImagemResponsiva,
-    ImagemResponsiva
+    'meu-botao': Botao
   },
 
   data(){
@@ -47,6 +53,14 @@ export default {
       } else {
         return this.fotos
       }
+    }
+  },
+
+  methods: {
+
+    remove(foto){
+    
+        alert('removeu marmota ' + foto.titulo)
     }
   },
 
